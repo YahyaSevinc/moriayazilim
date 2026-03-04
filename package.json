@@ -24,7 +24,7 @@
     "lucide-react": "^0.532.0",
     "motion": "^12.10.4",
     "motion-react": "^0.15.0-alpha.1",
-    "next": "15.3.2",
+    "next": "^16.1.6",
     "next-sitemap": "^4.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
