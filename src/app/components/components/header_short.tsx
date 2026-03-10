@@ -34,7 +34,8 @@ export default function Header_Short() {
         src="/header.jpg"
         alt={`${title} Sayfası Arkaplanı`}
         fill
-        priority // Sayfanın en üstünde olduğu için hemen yüklenmeli
+        priority
+        fetchPriority="high"
         className="object-cover object-center -z-10" // -z-10 ile yazının arkasına atıyoruz
         sizes="100vw"
       />
