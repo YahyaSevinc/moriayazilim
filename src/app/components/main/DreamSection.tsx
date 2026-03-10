@@ -89,7 +89,7 @@ const DreamSection: React.FC = () => {
     },
     image: {
       src: "/about_us.jpg",
-      alt: "Dream Section Görseli"
+      alt: "Moria Yazılım'ın Kuruluş Hikayesi"
     },
     stats: [
       { value: "5+", label: "Yıllık Tecrübe" },
@@ -103,7 +103,7 @@ const DreamSection: React.FC = () => {
   const [statsRef, statsInView] = useInView({ threshold: 0.3 });
 
   return (
-    <div className="w-full  p-4 md:p-8">
+    <div className="w-full p-4 md:p-8">
       <div className="flex flex-col lg:flex-row gap-6 ">
         {/* Sol: Başlık ve Açıklama */}
         <motion.div
@@ -111,13 +111,14 @@ const DreamSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="flex-1 bg-white shadow-lg border border-gray-200 rounded-2xl p-8  md:min-h-[70vh] flex flex-col h-full"
+          className="flex-1 bg-white shadow-lg border border-gray-200 rounded-2xl p-8 md:min-h-[70vh] flex flex-col h-full"
         >
           <div>
-            <div className="text-orange-500 text-xl mb-3">{DREAM_DATA.title.subtitle}</div>
-            <div className="text-4xl md:text-6xl font-bold mb-6 leading-tight whitespace-pre-line">
+            <span className="text-orange-500 text-xl mb-3 block">{DREAM_DATA.title.subtitle}</span>
+            {/* Erişilebilirlik için Ana Başlık etiketi */}
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight whitespace-pre-line">
               {DREAM_DATA.title.mainTitle}
-            </div>
+            </h1>
           </div>
           <p className="text-gray-700 text-base md:text-lg mt-auto whitespace-pre-line">
             <span className="block md:hidden">{DREAM_DATA.description.mobile}</span>
@@ -133,7 +134,7 @@ const DreamSection: React.FC = () => {
           transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
           className="flex-1 flex flex-col gap-6 md:min-h-[70vh] bg-white shadow-lg border border-gray-200 rounded-2xl p-2"
         >
-          {/* Üst: Görsel */}
+          {/* Üst: Görsel Konteyneri */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -144,9 +145,11 @@ const DreamSection: React.FC = () => {
             <Image
               src={DREAM_DATA.image.src}
               alt={DREAM_DATA.image.alt}
-              className="w-full h-full object-cover"
+              className="object-cover"
               fill
-              priority
+              priority={true}
+              // EN KRİTİK DÜZELTME: Tarayıcıya resmin boyutunu söylüyoruz.
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
             />
           </motion.div>
 
