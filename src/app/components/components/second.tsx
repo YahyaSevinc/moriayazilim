@@ -24,7 +24,7 @@ export default function SecondMain({ isVisible,displayedText }: SecondMainProps)
 
 
               <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center transform transition-all duration-1000 delay-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                <Link href="/pricing" className="bg-blue-600 hover:bg-blue-700 text-white md:px-8 md:py-3 px-6 py-2 rounded-lg font- md:text-xl text-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl  items-center group flex cursor-pointer">
+                <Link href="/our-packages" className="bg-blue-600 hover:bg-blue-700 text-white md:px-8 md:py-3 px-6 py-2 rounded-lg font- md:text-xl text-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl  items-center group flex cursor-pointer">
                     Teklif Al
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
