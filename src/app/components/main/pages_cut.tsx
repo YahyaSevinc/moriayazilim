@@ -48,7 +48,7 @@ export default function Portfolio() {
       description: "Hayal gücünü kodla buluşturan genç ve dinamik bir ekibiz. Modern teknolojilerle yazılım çözümleri geliştiriyor, her projeye tutkuyla yaklaşıyoruz. Moria Yazılım, fikirlerin gerçeğe dönüştüğü yerdir.",
       buttonText: "Bizi Tanıyın",
       image: "/our_work.jpg",
-      href:'/about'
+      href: '/about'
     },
     // {
     //   title: "Bloglarımız",
@@ -57,19 +57,19 @@ export default function Portfolio() {
     //   image: "/blogs.jpg",
     //   href:'/blog'
     // },
-     {
-       title: "Portfolyomuz",
-       description: "Her biri özenle planlanmış projelerimiz, kullanıcı deneyimi ve estetiği ön planda tutarak geliştirildi. Web'den mobil uygulamalara kadar geniş bir yelpazede, yenilikçi ve güvenilir çözümler sunuyoruz.",
-       buttonText: "Çalışmalarımız",
-       image: "/calismalarimiz.jpg",
-       href:'/portfolio'
-     },
+    {
+      title: "Portfolyomuz",
+      description: "Her biri özenle planlanmış projelerimiz, kullanıcı deneyimi ve estetiği ön planda tutarak geliştirildi. Web'den mobil uygulamalara kadar geniş bir yelpazede, yenilikçi ve güvenilir çözümler sunuyoruz.",
+      buttonText: "Çalışmalarımız",
+      image: "/calismalarimiz.jpg",
+      href: '/portfolio'
+    },
     {
       title: "İletişim",
       description: "Fikriniz mi var? Haydi konuşalım! Size en uygun dijital çözümleri birlikte belirleyelim. Moria Yazılım ekibi, her zaman bir mesaj uzağınızda.",
       buttonText: "Bize Ulaşın",
       image: "/contact2.jpg",
-      href:'/contact'
+      href: '/contact'
     }
   ];
 
@@ -101,7 +101,15 @@ export default function Portfolio() {
           >
             {/* Mobilde görsel üstte, masaüstünde sağda */}
             <div className="block sm:hidden w-full mb-4">
-              <Image src={page.image} width={800} height={220} className="w-full h-[220px] md:rounden-3xl rounded-xl shadow-md object-cover shadow-gray-500" alt={page.title} />
+              <Image 
+                src={page.image} 
+                width={800} 
+                height={220} 
+                className="w-full h-[220px] md:rounden-3xl rounded-xl shadow-md object-cover shadow-gray-500" 
+                alt={page.title} 
+                sizes="(max-width: 640px) 100vw, 800px"
+                priority={index === 0}
+              />
             </div>
             <AnimatePresence mode="wait">
             {currentPage - 1 === index && (
@@ -163,7 +171,15 @@ export default function Portfolio() {
             </AnimatePresence>
             {/* Masaüstü: görsel sağda, mobilde yukarıda zaten gösterildiği için burada sadece sm ve üstü için göster */}
             <div className="hidden sm:block lg:w-1/2 md:w-full sm:w-full lg:h-full md:h-1/2 sm:h-1/2">
-              <Image src={page.image} width={800} height={600} className="w-full h-full rounded-md md:rounded-3xl shadow-md object-cover shadow-gray-500" alt={page.title} />
+              <Image 
+                src={page.image} 
+                width={800} 
+                height={600} 
+                className="w-full h-full rounded-md md:rounded-3xl shadow-md object-cover shadow-gray-500" 
+                alt={page.title} 
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
+                priority={index === 0}
+              />
             </div>
             {/* Mobilde oklar en altta ve ortalanmış */}
             <div className="sm:hidden w-full flex justify-center mt-6">
