@@ -149,22 +149,24 @@ export default function Portfolio() {
                     style={{ width: `${(currentPage / totalPages) * 100}%` }}
                   ></div>
                 </div>
-                  <div className="flex space-x-2">
-                    <button 
-                      className={`${currentPage > 1 ? 'bg-gray-900' : 'bg-gray-500'} text-white p-6 rounded-full aspect-square cursor-pointer`}
-                      onClick={() => handlePageChange('prev')}
-                      disabled={currentPage === 1 || animating}
-                    >
-                      <FaArrowLeft size={30}/>
-                    </button>
-                    <button 
-                      className={`${currentPage < totalPages ? 'bg-gray-900' : 'bg-gray-500'} text-white p-6 rounded-full aspect-square cursor-pointer`}
-                      onClick={() => handlePageChange('next')}
-                      disabled={currentPage === totalPages || animating}
-                    >
-                      <FaArrowRight size={30}/>
-                    </button>
-                  </div>
+                <div className="flex space-x-2">
+  <button 
+    className={`${currentPage > 1 ? 'bg-gray-900' : 'bg-gray-500'} text-white p-6 rounded-full aspect-square cursor-pointer`}
+    onClick={() => handlePageChange('prev')}
+    disabled={currentPage === 1 || animating}
+    aria-label="Önceki Slayt" // EKLENEN KISIM
+  >
+    <FaArrowLeft size={30}/>
+  </button>
+  <button 
+    className={`${currentPage < totalPages ? 'bg-gray-900' : 'bg-gray-500'} text-white p-6 rounded-full aspect-square cursor-pointer`}
+    onClick={() => handlePageChange('next')}
+    disabled={currentPage === totalPages || animating}
+    aria-label="Sonraki Slayt" // EKLENEN KISIM
+  >
+    <FaArrowRight size={30}/>
+  </button>
+</div>
                 </div>
               </motion.div>
             )}
