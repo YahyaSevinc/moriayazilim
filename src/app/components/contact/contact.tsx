@@ -13,8 +13,8 @@ const contactDetails = [
   {
     icon: MdEmail,
     title: "E-posta",
-    value: "iletisim@moriayazilim.com",
-    href: "mailto:iletisim@moriayazilim.com"
+    value: "moriayazilim@gmail.com",
+    href: "mailto:moriayazilim@gmail.com"
   },
   {
     icon: FaInstagram,

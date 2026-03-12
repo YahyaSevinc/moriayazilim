@@ -46,7 +46,7 @@ export const socialMediaLinks = [
   },
   {
     name: "E-Posta",
-    url: "mailto:iletisim@moriayazilim.com",
+    url: "mailto:moriayazilim@gmail.com",
     icon: "MdEmail",
     color: "hover:text-black"
   },
@@ -61,7 +61,7 @@ export const socialMediaLinks = [
 
 export const contactInfo = {
   phone: "0551 966 78 36",
-  email: "iletisim@moriayazilim.com",
+  email: "moriayazilim@gmail.com",
   address: "İstanbul, Türkiye",
   workingHours: "Pazartesi - Cuma: 09:00 - 18:00"
 }; 

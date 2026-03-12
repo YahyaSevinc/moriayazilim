@@ -74,11 +74,11 @@ export default function Header() {
         <div className="flex space-x-3">
           
           <a
-            href="mailto:iletisim@moriayazilim.com"
+            href="mailto:moriayazilim@gmail.com"
             onClick={(e) => {
               e.preventDefault();
               console.log('Mailto clicked - opening email client');
-              window.location.href = 'mailto:iletisim@moriayazilim.com';
+              window.location.href = 'mailto:moriayazilim@gmail.com';
             }}
             className={`flex items-center space-x-1 text-xs ${pathname=="/" ? "text-black/80" : "text-white" } hover:underline cursor-pointer`}
           >
@@ -193,11 +193,11 @@ export default function Header() {
               <div className="flex flex-col items-start text-base gap-4">
                 <SocialMediaIcons className="text-xl" iconSize="text-xl" exclude={['FaWhatsapp','MdEmail']} />
                 <a 
-                  href="mailto:iletisim@moriayazilim.com"
+                  href="mailto:moriayazilim@gmail.com"
                   onClick={(e) => {
                     e.preventDefault();
                     console.log('Mailto clicked (mobile) - opening email client');
-                    window.location.href = 'mailto:iletisim@moriayazilim.com';
+                    window.location.href = 'mailto:moriayazilim@gmail.com';
                   }}
                   className="flex items-center gap-2 text-base cursor-pointer"
                 >
