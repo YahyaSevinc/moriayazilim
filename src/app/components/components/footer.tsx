@@ -44,7 +44,7 @@ export default function Footer() {
 
       {/* Sadece mobilde gözükecek copyright satırı */}
       <div className="block md:hidden w-full text-center text-xs text-gray-600 pb-4">
-        © Copyright 2025 Moria Yazılım A.Ş.
+        © Copyright {new Date().getFullYear()} Moria Yazılım A.Ş.
       </div>
     </footer>
 
