@@ -182,7 +182,7 @@ export default function PortfolioPage() {
     <main className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
         <span className="text-sm uppercase tracking-widest text-blue-500 font-medium">
-          PORTFOLYO
+          {locale === "en" ? "PORTFOLIO" : "PORTFOLYO"}
         </span>
         <h1 className="mt-2 text-4xl sm:text-5xl font-bold text-gray-800">
           {locale === "en" ? "Our work" : "Çalışmalarımız"}

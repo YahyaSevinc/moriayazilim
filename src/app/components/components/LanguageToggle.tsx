@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { getLocaleFromPathname, stripEnPrefix } from "@/app/utils/locale";
+import { getLocaleFromPathname, stripEnPrefix, withLocalePrefix } from "@/app/utils/locale";
 
 type Props = {
   className?: string;
@@ -18,8 +18,9 @@ export default function LanguageToggle({
   const pathname = usePathname();
   const locale = getLocaleFromPathname(pathname);
 
-  const trHref = stripEnPrefix(pathname || "/");
-  const enHref = "/en";
+  const normalized = stripEnPrefix(pathname || "/");
+  const trHref = normalized;
+  const enHref = withLocalePrefix(normalized, "en");
 
   const isTrActive = locale === "tr";
   const isEnActive = locale === "en";
