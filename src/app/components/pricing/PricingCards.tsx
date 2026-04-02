@@ -3,6 +3,8 @@
 import { IoCheckmarkCircle, IoCloseSharp } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname, withLocalePrefix } from "@/app/utils/locale";
 
 // Define the Plan type
 interface Plan {
@@ -16,11 +18,71 @@ interface Plan {
 
 export default function PricingCards() {
   const router = useRouter();
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
   
-  const plans: Plan[] = [
-    {
-      name: "Basit Plan",
-      description: "Düşük bütçe için önerilen paketimizdir.",
+  const plans: Plan[] =
+    locale === "en"
+      ? [
+          {
+            name: "Basic",
+            description: "A great fit for a small budget.",
+            recommended: false,
+            features: [
+              "Website design",
+              "Responsive design",
+              "Up to 4 pages",
+              "2 revisions",
+              "Hosting & domain setup support",
+              "Google Search Console integration support",
+              "E-commerce integration",
+              "Admin panel",
+              "24/7 support",
+              "Blog system",
+            ],
+            included: [true, true, true, true, true, true, false, false, false],
+          },
+          {
+            name: "Standard",
+            description: "Ideal for growing businesses.",
+            recommended: true,
+            features: [
+              "Website design",
+              "Responsive design",
+              "Unlimited pages",
+              "Blog system",
+              "Unlimited revisions",
+              "Admin panel",
+              "Hosting & domain setup support",
+              "Google Search Console integration support",
+              "24/7 support",
+              "E-commerce integration",
+            ],
+            included: [true, true, true, true, true, true, true, true, false, false],
+          },
+          {
+            name: "Pro",
+            description: "A comprehensive solution for large projects.",
+            recommended: false,
+            features: [
+              "Website design",
+              "Responsive design",
+              "Unlimited pages",
+              "Blog system",
+              "Unlimited revisions",
+              "Admin panel",
+              "Hosting & domain setup support",
+              "Google Search Console integration support",
+              "24/7 support",
+              "E-commerce integration",
+            ],
+            included: [true, true, true, true, true, true, true, true, true, true],
+          },
+        ]
+      : [
+          {
+            name: "Basit Plan",
+            description: "Düşük bütçe için önerilen paketimizdir.",
       recommended: false,
       features: [
         "Web sitesi tasarımı",
@@ -75,15 +137,21 @@ export default function PricingCards() {
   ];
 
   const handlePackageSelect = (plan: Plan) => {
-    const subject = `${plan.name} Paketi Hakkında Bilgi`;
-    const message = `Merhaba,\n\n${plan.name} paketi hakkında detaylı bilgi almak istiyorum.\n\nLütfen bu paket hakkında daha detaylı bilgi verebilir misiniz?`;
+    const subject =
+      locale === "en"
+        ? `Info about the ${plan.name} package`
+        : `${plan.name} Paketi Hakkında Bilgi`;
+    const message =
+      locale === "en"
+        ? `Hello,\n\nI would like to get more detailed information about the ${plan.name} package.\n\nCould you please share more details?`
+        : `Merhaba,\n\n${plan.name} paketi hakkında detaylı bilgi almak istiyorum.\n\nLütfen bu paket hakkında daha detaylı bilgi verebilir misiniz?`;
     
     const params = new URLSearchParams({
       subject: subject,
       message: message
     });
     
-    router.push(`/contact?${params.toString()}`);
+    router.push(`${withLocalePrefix("/contact", locale)}?${params.toString()}`);
   };
 
   return (
@@ -127,7 +195,7 @@ export default function PricingCards() {
               viewport={{ once: true }}
               className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg"
             >
-              En Popüler
+              {locale === "en" ? "Most popular" : "En Popüler"}
             </motion.div>
           )}
           
@@ -175,7 +243,7 @@ export default function PricingCards() {
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
-              Paketi Seç
+              {locale === "en" ? "Choose package" : "Paketi Seç"}
             </motion.button>
 
             <hr className="border-gray-200 mb-6" />

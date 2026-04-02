@@ -7,6 +7,8 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { MdEmail } from "react-icons/md";
 import { FaInstagram } from 'react-icons/fa6';
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname } from "@/app/utils/locale";
 
 // Contact information data
 const contactDetails = [
@@ -27,6 +29,41 @@ const contactDetails = [
 // useSearchParams kullandığımız için içeriği Suspense ile sarmalamalıyız (Next.js kuralı)
 function ContactFormContent() {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+
+  const t =
+    locale === "en"
+      ? {
+          title: "Contact us",
+          subtitle: "Reach out for your projects. We’ll get back to you as soon as possible.",
+          sendMessage: "Send a message",
+          name: "Name",
+          email: "Email",
+          subject: "Subject",
+          message: "Message",
+          success: "Your message has been sent successfully. We’ll get back to you shortly.",
+          error: "Something went wrong while sending your message. Please try again.",
+          sending: "Sending...",
+          send: "Send",
+          details: "Contact details",
+          loading: "Loading...",
+        }
+      : {
+          title: "Bize Ulaşın",
+          subtitle: "Projeleriniz için bizimle iletişime geçin. Size en kısa sürede dönüş yapacağız.",
+          sendMessage: "Mesaj Gönderin",
+          name: "Adınız",
+          email: "E-posta",
+          subject: "Konu",
+          message: "Mesajınız",
+          success: "Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.",
+          error: "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+          sending: "Gönderiliyor...",
+          send: "Mesaj Gönder",
+          details: "İletişim Bilgileri",
+          loading: "Yükleniyor...",
+        };
   
   const [formData, setFormData] = useState({
     name: "",
@@ -95,10 +132,10 @@ function ContactFormContent() {
         className="text-center mb-16"
       >
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-          Bize Ulaşın
+          {t.title}
         </h1>
         <p className="md:text-xl text-gray-600 max-w-2xl mx-auto">
-          Projeleriniz için bizimle iletişime geçin. Size en kısa sürede dönüş yapacağız.
+          {t.subtitle}
         </p>
       </motion.div>
 
@@ -110,13 +147,13 @@ function ContactFormContent() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full"
         >
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Mesaj Gönderin</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">{t.sendMessage}</h2>
           
           <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
             <div className="grid md:grid-cols-2 gap-6 w-full">
               <div>
                 <label htmlFor="name" className="block text-sm text-gray-700 mb-2">
-                  Adınız
+                  {t.name}
                 </label>
                 <input
                   type="text"
@@ -131,7 +168,7 @@ function ContactFormContent() {
               
               <div>
                 <label htmlFor="email" className="block text-sm text-gray-700 mb-2">
-                  E-posta
+                  {t.email}
                 </label>
                 <input
                   type="email"
@@ -147,7 +184,7 @@ function ContactFormContent() {
 
             <div className="w-full">
               <label htmlFor="subject" className="block text-sm text-gray-700 mb-2">
-                Konu
+                {t.subject}
               </label>
               <input
                 type="text"
@@ -162,7 +199,7 @@ function ContactFormContent() {
 
             <div className="w-full">
               <label htmlFor="message" className="block text-sm text-gray-700 mb-2">
-                Mesajınız
+                {t.message}
               </label>
               <textarea
                 id="message"
@@ -182,7 +219,7 @@ function ContactFormContent() {
                 animate={{ opacity: 1, y: 0 }}
                 className="p-4 bg-green-50 border border-green-200 rounded-xl text-green-700"
               >
-                Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.
+                {t.success}
               </motion.div>
             )}
 
@@ -192,7 +229,7 @@ function ContactFormContent() {
                 animate={{ opacity: 1, y: 0 }}
                 className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700"
               >
-                 Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.
+                 {t.error}
               </motion.div>
             )}
 
@@ -207,7 +244,7 @@ function ContactFormContent() {
                   : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl'
               }`}
             >
-              {isSubmitting ? 'Gönderiliyor...' : 'Mesaj Gönder'}
+              {isSubmitting ? t.sending : t.send}
             </motion.button>
           </form>
         </motion.div>
@@ -221,18 +258,20 @@ function ContactFormContent() {
         >
           {/* Contact Details */}
           <div className="bg-white rounded-2xl shadow-xl p-8 h-full">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">İletişim Bilgileri</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.details}</h3>
             
             <div className="space-y-6">
               {contactDetails.map((contact, index) => {
                 const IconComponent = contact.icon;
+                const title =
+                  locale === "en" && contact.title === "E-posta" ? "Email" : contact.title;
                 return (
                   <div key={index} className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
                       <IconComponent className="w-6 h-6 text-blue-600" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">{contact.title}</p>
+                      <p className="font-semibold text-gray-900">{title}</p>
                       {contact.href ? (
                         <a 
                           href={contact.href}
@@ -258,9 +297,11 @@ function ContactFormContent() {
 }
 
 export default function Contact() {
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-10 px-4">
-      <Suspense fallback={<div className="min-h-[80vh] flex items-center justify-center">Yükleniyor...</div>}>
+      <Suspense fallback={<div className="min-h-[80vh] flex items-center justify-center">{locale === "en" ? "Loading..." : "Yükleniyor..."}</div>}>
         <ContactFormContent />
       </Suspense>
     </div>

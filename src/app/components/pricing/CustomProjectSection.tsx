@@ -2,15 +2,22 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname, withLocalePrefix } from "@/app/utils/locale";
 
 export default function CustomProjectSection() {
   const router = useRouter();
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
   
   const handleCustomProjectClick = () => {
-    const subject = "Özel Proje Teklifi";
-    const message = "Merhaba, özel bir proje için teklif almak istiyorum.";
+    const subject = locale === "en" ? "Custom project quote" : "Özel Proje Teklifi";
+    const message =
+      locale === "en"
+        ? "Hello, I would like to request a quote for a custom project."
+        : "Merhaba, özel bir proje için teklif almak istiyorum.";
     const params = new URLSearchParams({ subject, message });
-    router.push(`/contact?${params.toString()}`);
+    router.push(`${withLocalePrefix("/contact", locale)}?${params.toString()}`);
   };
 
   return (
@@ -42,7 +49,7 @@ export default function CustomProjectSection() {
           viewport={{ once: true }}
           className="text-2xl font-bold text-gray-900 mb-4"
         >
-          Özel Projeler İçin
+          {locale === "en" ? "For custom projects" : "Özel Projeler İçin"}
         </motion.h3>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -51,8 +58,12 @@ export default function CustomProjectSection() {
           viewport={{ once: true }}
           className="text-gray-600 mb-6"
         >
-          Standart paketlerimiz dışında özel ihtiyaçlarınız için özel çözümler sunuyoruz. 
-          Bizimle iletişime geçin, projenizi birlikte planlayalım.
+          {locale === "en"
+            ? "Beyond our standard packages, we provide tailored solutions for your unique needs. Contact us and let’s plan your project together."
+            : <>
+                Standart paketlerimiz dışında özel ihtiyaçlarınız için özel çözümler sunuyoruz. 
+                Bizimle iletişime geçin, projenizi birlikte planlayalım.
+              </>}
         </motion.p>
         <motion.button 
           initial={{ opacity: 0, y: 20 }}
@@ -71,7 +82,7 @@ export default function CustomProjectSection() {
           className="bg-gradient-to-r cursor-pointer from-blue-600 to-blue-700 text-white px-8 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl"
           onClick={handleCustomProjectClick}
         >
-          Özel Teklif Al
+          {locale === "en" ? "Get a custom quote" : "Özel Teklif Al"}
         </motion.button>
       </motion.div>
     </motion.div>

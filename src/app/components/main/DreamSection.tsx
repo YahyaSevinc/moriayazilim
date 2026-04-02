@@ -3,6 +3,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname } from "@/app/utils/locale";
 
 // Intersection Observer tabanlı görünürlük kontrolü
 function useInView(options = { threshold: 0.3 }) {
@@ -78,26 +80,55 @@ function StatCard({ value, label, index, statsInView }: StatCardProps) {
 }
 
 const DreamSection: React.FC = () => {
-  const DREAM_DATA = {
-    title: {
-      subtitle: "Nasıl Başladık?",
-      mainTitle: "Hayal, Tutku ve \nKodlarla \nMoria'nın Doğuşu"
-    },
-    description: {
-      mobile: "Hayal ve tutku ile başlayan yolculuğumuzda, küçük bir ekip olarak ilk projelerimizi büyük bir heyecanla geliştirdik. Bugün hâlâ aynı tutkuyla çalışıyoruz.",
-      desktop: "Moria Yazılım, birkaç gencin yazılıma duyduğu tutku ve hayallerle doğdu.Kod yazmak bizim için sadece iş değil, bir yaşam biçimiydi. Küçük bir odada, eski bilgisayarlarla ilk projelerimizi geliştirdik. İmkânlarımız kısıtlıydı ama heyecanımız ve öğrenme isteğimiz sonsuzdu. Geceleri kod yazar, gündüzleri araştırırdık; çok şey öğrendik, hatalar yaptık ama yılmadık. Her deneme bizi geliştirdi. Zamanla küçük işler aldık, ilk müşterilerimiz bize güvendi. Bu güvenle ekibimizi büyüttük. Amacımız hep kaliteli ve hızlı çözümler sunmaktı. Her satır kodda bir hayali gerçeğe dönüştürüyoruz. Bugün hâlâ ilk günkü heyecanla çalışıyoruz. Moria ismini hayal gücümüzden aldık. Sadece yazılım değil, bir vizyon kuruyoruz. Sabır ve azimle her şeyin mümkün olduğunu öğrendik. Artık daha güçlüyüz; bir ekip, bir aileyiz. Ve biliyoruz ki en güzel projelerimiz henüz gelmedi."
-    },
-    image: {
-      src: "/about_us.jpg",
-      alt: "Moria Yazılım'ın Kuruluş Hikayesi"
-    },
-    stats: [
-      { value: "5+", label: "Yıllık Tecrübe" },
-      { value: "20+", label: "Tamamlanan Proje" },
-      { value: "10+", label: "Mutlu Müşteri" },
-      { value: "5", label: "Kişilik Ekip" },
-    ]
-  };
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+
+  const DREAM_DATA =
+    locale === "en"
+      ? {
+          title: {
+            subtitle: "How we started",
+            mainTitle: "A dream, passion, and\ncode:\nThe birth of Moria",
+          },
+          description: {
+            mobile:
+              "Our journey started with a dream and passion. As a small team, we built our first projects with huge excitement — and we still work with the same drive today.",
+            desktop:
+              "Moria Software was born from the passion and dreams of a few young developers. For us, writing code was never “just work” — it was a way of life. In a small room, with old computers, we built our first projects. Our resources were limited, but our curiosity and desire to learn were endless. We coded at night and researched by day; we learned a lot, made mistakes, and never gave up. Every attempt made us better. Over time, we took on small jobs and our first clients trusted us. With that trust, we grew our team. Our goal has always been to deliver quality and speed. In every line of code, we turn an idea into reality. We still work with the excitement of day one. We took the name “Moria” from our imagination — we’re not just building software, we’re building a vision. We learned that with patience and determination, anything is possible. Today we’re stronger: a team, a family. And we know our best projects are still ahead.",
+          },
+          image: {
+            src: "/about_us.jpg",
+            alt: "The founding story of Moria Software",
+          },
+          stats: [
+            { value: "5+", label: "Years of experience" },
+            { value: "20+", label: "Completed projects" },
+            { value: "10+", label: "Happy clients" },
+            { value: "5", label: "Team members" },
+          ],
+        }
+      : {
+          title: {
+            subtitle: "Nasıl Başladık?",
+            mainTitle: "Hayal, Tutku ve \nKodlarla \nMoria'nın Doğuşu",
+          },
+          description: {
+            mobile:
+              "Hayal ve tutku ile başlayan yolculuğumuzda, küçük bir ekip olarak ilk projelerimizi büyük bir heyecanla geliştirdik. Bugün hâlâ aynı tutkuyla çalışıyoruz.",
+            desktop:
+              "Moria Yazılım, birkaç gencin yazılıma duyduğu tutku ve hayallerle doğdu.Kod yazmak bizim için sadece iş değil, bir yaşam biçimiydi. Küçük bir odada, eski bilgisayarlarla ilk projelerimizi geliştirdik. İmkânlarımız kısıtlıydı ama heyecanımız ve öğrenme isteğimiz sonsuzdu. Geceleri kod yazar, gündüzleri araştırırdık; çok şey öğrendik, hatalar yaptık ama yılmadık. Her deneme bizi geliştirdi. Zamanla küçük işler aldık, ilk müşterilerimiz bize güvendi. Bu güvenle ekibimizi büyüttük. Amacımız hep kaliteli ve hızlı çözümler sunmaktı. Her satır kodda bir hayali gerçeğe dönüştürüyoruz. Bugün hâlâ ilk günkü heyecanla çalışıyoruz. Moria ismini hayal gücümüzden aldık. Sadece yazılım değil, bir vizyon kuruyoruz. Sabır ve azimle her şeyin mümkün olduğunu öğrendik. Artık daha güçlüyüz; bir ekip, bir aileyiz. Ve biliyoruz ki en güzel projelerimiz henüz gelmedi.",
+          },
+          image: {
+            src: "/about_us.jpg",
+            alt: "Moria Yazılım'ın Kuruluş Hikayesi",
+          },
+          stats: [
+            { value: "5+", label: "Yıllık Tecrübe" },
+            { value: "20+", label: "Tamamlanan Proje" },
+            { value: "10+", label: "Mutlu Müşteri" },
+            { value: "5", label: "Kişilik Ekip" },
+          ],
+        };
 
   // Sayaç grid için görünürlük kontrolü
   const [statsRef, statsInView] = useInView({ threshold: 0.3 });

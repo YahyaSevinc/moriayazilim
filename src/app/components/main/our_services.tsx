@@ -2,8 +2,12 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname } from "@/app/utils/locale";
 
 export default function Header_Short() {
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
   const [isHovered, setIsHovered] = useState(false);
 
   // Manuel preload useEffect kaldırıldı. Next.js priority prop'u ile bunu halleder.
@@ -18,7 +22,7 @@ export default function Header_Short() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/code.png"
-            alt="Web Tasarım Arkaplan"
+            alt={locale === "en" ? "Web design background" : "Web Tasarım Arkaplan"}
             fill
             className={`object-cover object-center transition-opacity duration-700 ease-in-out ${!isHovered ? 'opacity-100' : 'opacity-0'}`}
             priority // İlk ekran görseli olduğu için en yüksek öncelik
@@ -26,7 +30,7 @@ export default function Header_Short() {
           />
           <Image
             src="/logodesign.jpg"
-            alt="Logo Tasarım Arkaplan"
+            alt={locale === "en" ? "Logo design background" : "Logo Tasarım Arkaplan"}
             fill
             className={`object-cover object-center transition-opacity duration-700 ease-in-out ${isHovered ? 'opacity-100' : 'opacity-0'}`}
             priority={false} // Bu resim hover ile geldiği için önceliği düşük
@@ -43,11 +47,15 @@ export default function Header_Short() {
           </div>
           <div className="w-full flex items-start transition-all duration-700 ease-in-out">
             {/* Sayfanın Ana Başlığı */}
-            <h1 className={`text-base md:text-4xl text-white font-bold transition-all duration-700 ${!isHovered ? 'translate-y-[-10px] opacity-100' : 'opacity-50'}`}>Web Tasarım</h1>
+            <h1 className={`text-base md:text-4xl text-white font-bold transition-all duration-700 ${!isHovered ? 'translate-y-[-10px] opacity-100' : 'opacity-50'}`}>
+              {locale === "en" ? "Web Design" : "Web Tasarım"}
+            </h1>
           </div>
           <div className="w-full flex items-start transition-all duration-700 ease-in-out">
             <p className={`text-sm md:text-xl text-white leading-snug break-words transition-all duration-700 ${!isHovered ? 'translate-y-[-10px] opacity-100' : 'opacity-50'}`}>
-              Modern ve kullanıcı dostu web tasarımı ile markanızı dijital dünyada öne çıkarıyoruz. Responsive tasarım, SEO uyumlu yapı ve hızlı yükleme süreleri ile müşterilerinize en iyi deneyimi sunuyoruz.
+              {locale === "en"
+                ? "We help your brand stand out with modern, user-friendly web design. Responsive layouts, SEO-ready structure, and fast load times deliver the best experience to your customers."
+                : "Modern ve kullanıcı dostu web tasarımı ile markanızı dijital dünyada öne çıkarıyoruz. Responsive tasarım, SEO uyumlu yapı ve hızlı yükleme süreleri ile müşterilerinize en iyi deneyimi sunuyoruz."}
             </p>
           </div>
         </div>
@@ -64,11 +72,15 @@ export default function Header_Short() {
             <span className={`text-base md:text-8xl text-white font-bold transition-all duration-700 ${isHovered ? 'translate-y-[-10px] opacity-100' : 'opacity-50'}`}>02</span>
           </div>
           <div className="w-full flex items-start transition-all duration-700 ease-in-out">
-            <h2 className={`text-base md:text-4xl text-white font-bold transition-all duration-700 ${isHovered ? 'translate-y-[-10px] opacity-100' : 'opacity-50'}`}>Logo Tasarım</h2>
+            <h2 className={`text-base md:text-4xl text-white font-bold transition-all duration-700 ${isHovered ? 'translate-y-[-10px] opacity-100' : 'opacity-50'}`}>
+              {locale === "en" ? "Logo Design" : "Logo Tasarım"}
+            </h2>
           </div>
           <div className="w-full flex items-start transition-all duration-700 ease-in-out">
             <p className={`text-sm md:text-xl text-white leading-snug break-words transition-all duration-700 ${isHovered ? 'translate-y-[-10px] opacity-100' : 'opacity-50'}`}>
-              Markanızın kimliğini yansıtan, akılda kalıcı ve profesyonel logo tasarımları oluşturuyoruz. Her logo, markanızın değerlerini ve hedef kitlenizi yansıtacak şekilde özenle tasarlanır.
+              {locale === "en"
+                ? "We create memorable, professional logos that reflect your brand identity. Each logo is designed carefully to match your values and your target audience."
+                : "Markanızın kimliğini yansıtan, akılda kalıcı ve profesyonel logo tasarımları oluşturuyoruz. Her logo, markanızın değerlerini ve hedef kitlenizi yansıtacak şekilde özenle tasarlanır."}
             </p>
           </div>
         </div>

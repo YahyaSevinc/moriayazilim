@@ -3,17 +3,31 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import SecondMain from "./second";
 import FirstMain from "./first";
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname } from "@/app/utils/locale";
 
 export default function Header_Short() {
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+
   const rotatingTexts = useMemo(
-    () => [
-      "modern web siteleriyle geliştiriyoruz",
-      "SEO uyumlu hale getiriyoruz",
-      "hızlı ve güvenli yapıyoruz",
-      "tasarımıyla fark yaratıyoruz",
-      "mobil uyumlu sunuyoruz",
-    ],
-    []
+    () =>
+      locale === "en"
+        ? [
+            "build modern websites",
+            "make it SEO-friendly",
+            "deliver fast and secure",
+            "stand out with design",
+            "ship mobile-ready",
+          ]
+        : [
+            "modern web siteleriyle geliştiriyoruz",
+            "SEO uyumlu hale getiriyoruz",
+            "hızlı ve güvenli yapıyoruz",
+            "tasarımıyla fark yaratıyoruz",
+            "mobil uyumlu sunuyoruz",
+          ],
+    [locale]
   );
 
   const [displayedText, setDisplayedText] = useState('');

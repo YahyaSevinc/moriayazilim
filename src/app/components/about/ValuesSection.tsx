@@ -1,12 +1,42 @@
 "use client";
 
 import { motion } from 'framer-motion';
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname } from "@/app/utils/locale";
 
 export default function ValuesSection() {
-  const values = [
-    {
-      title: "Yenilikçilik",
-      description: "Sürekli gelişim ve yenilikçi çözümler üretiyoruz.",
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+
+  const values =
+    locale === "en"
+      ? [
+          {
+            title: "Innovation",
+            description: "We continuously improve and build innovative solutions.",
+            icon: (
+              <svg className="mx-auto mb-4 h-12 w-12 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M6.05 17.95l-1.414 1.414m12.728 0l-1.414-1.414M6.05 6.05L4.636 4.636M12 7a5 5 0 100 10 5 5 0 000-10z" /></svg>
+            )
+          },
+          {
+            title: "Quality",
+            description: "We aim for the highest quality standards in every project.",
+            icon: (
+              <svg className="mx-auto mb-4 h-12 w-12 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a1.5 1.5 0 012.04 0l1.518 1.36a1.5 1.5 0 001.06.44h1.8a1.5 1.5 0 011.5 1.5v1.8a1.5 1.5 0 00.44 1.06l1.36 1.518a1.5 1.5 0 010 2.04l-1.36 1.518a1.5 1.5 0 00-.44 1.06v1.8a1.5 1.5 0 01-1.5 1.5h-1.8a1.5 1.5 0 00-1.06.44l-1.518 1.36a1.5 1.5 0 01-2.04 0l-1.518-1.36a1.5 1.5 0 00-1.06-.44h-1.8a1.5 1.5 0 01-1.5-1.5v-1.8a1.5 1.5 0 00-.44-1.06l-1.36-1.518a1.5 1.5 0 010-2.04l1.36-1.518a1.5 1.5 0 00.44-1.06v-1.8a1.5 1.5 0 011.5-1.5h1.8a1.5 1.5 0 001.06-.44l1.518-1.36z" /></svg>
+            )
+          },
+          {
+            title: "Trust",
+            description: "We build trust-based relationships with our clients.",
+            icon: (
+              <svg className="mx-auto mb-4 h-12 w-12 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11c1.657 0 3-1.343 3-3V7a3 3 0 10-6 0v1c0 1.657 1.343 3 3 3zm6 2v5a2 2 0 01-2 2H8a2 2 0 01-2-2v-5a6 6 0 1112 0z" /></svg>
+            )
+          }
+        ]
+      : [
+          {
+            title: "Yenilikçilik",
+            description: "Sürekli gelişim ve yenilikçi çözümler üretiyoruz.",
       icon: (
         <svg className="mx-auto mb-4 h-12 w-12 text-blue-600" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M6.05 17.95l-1.414 1.414m12.728 0l-1.414-1.414M6.05 6.05L4.636 4.636M12 7a5 5 0 100 10 5 5 0 000-10z" /></svg>
       )
@@ -36,7 +66,7 @@ export default function ValuesSection() {
         viewport={{ once: true }}
         className="text-4xl font-extrabold text-center mb-16 tracking-tight text-black drop-shadow-lg"
       >
-        Değerlerimiz
+        {locale === "en" ? "Our values" : "Değerlerimiz"}
       </motion.h2>
       <motion.div 
         initial={{ opacity: 0 }}

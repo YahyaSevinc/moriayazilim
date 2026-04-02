@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { ChevronUp, Search, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname, withLocalePrefix } from "@/app/utils/locale";
 
 interface Blog {
   id: string;
@@ -22,14 +24,19 @@ interface Category {
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);
-    return d.toLocaleDateString('tr-TR', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: '2-digit' 
-    });
+  // Locale-aware formatting (TR by default)
+  const pathname = typeof window !== "undefined" ? window.location.pathname : "";
+  const locale = getLocaleFromPathname(pathname);
+  return d.toLocaleDateString(locale === "en" ? "en-US" : "tr-TR", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  });
 }
 
 export default function BlogsPage() {
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
   const [categories, setCategories] = useState<Category[]>([]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
@@ -136,7 +143,7 @@ export default function BlogsPage() {
     return (
       <main className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <div className="text-xl">Yükleniyor...</div>
+          <div className="text-xl">{locale === "en" ? "Loading..." : "Yükleniyor..."}</div>
         </div>
       </main>
     );
@@ -146,13 +153,15 @@ export default function BlogsPage() {
     <main className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
         <span className="text-sm uppercase tracking-widest text-blue-500 font-medium">
-          BLOGLAR
+          {locale === "en" ? "BLOG" : "BLOGLAR"}
         </span>
         <h1 className="mt-2 text-4xl sm:text-5xl font-bold text-gray-800">
-          Son Gelişmeler
+          {locale === "en" ? "Latest updates" : "Son Gelişmeler"}
         </h1>
         <p className="mt-4 text-gray-500 max-w-xl mx-auto text-base">
-          Teknoloji, güvenlik ve web dünyasından en yeni haberler ve analizler burada!
+          {locale === "en"
+            ? "The newest news and analysis from technology, security and the web."
+            : "Teknoloji, güvenlik ve web dünyasından en yeni haberler ve analizler burada!"}
         </p>
       </div>
 
@@ -165,12 +174,12 @@ export default function BlogsPage() {
           <div className="p-6">
 
             <div className="flex flex-row justify-between">
-              <h3 className="text-xl font-semibold text-gray-800 p-2">Kategoriler</h3>
+              <h3 className="text-xl font-semibold text-gray-800 p-2">{locale === "en" ? "Categories" : "Kategoriler"}</h3>
               <div className="relative mb-6">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="text"
-                  placeholder="Kategori ara..."
+                  placeholder={locale === "en" ? "Search category..." : "Kategori ara..."}
                   value={categorySearch}
                   onChange={(e) => setCategorySearch(e.target.value)}
                   className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
@@ -221,7 +230,7 @@ export default function BlogsPage() {
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    Tümü 
+                    {locale === "en" ? "All" : "Tümü"} 
                     <span className={`px-2 py-0.5 rounded-full text-xs ${
                       selectedCategory === 'all'
                         ? 'bg-white/20 text-white'
@@ -262,7 +271,9 @@ export default function BlogsPage() {
                 {/* Arama sonucu bulunamadı */}
                 {categorySearch && filteredCategories.length === 0 && (
                   <div className="text-gray-500 text-sm py-2 flex-shrink-0">
-                    {categorySearch} için kategori bulunamadı
+                    {locale === "en"
+                      ? `No categories found for "${categorySearch}"`
+                      : `${categorySearch} için kategori bulunamadı`}
                   </div>
                 )}
               </div>
@@ -273,7 +284,15 @@ export default function BlogsPage() {
           <button
             onClick={() => setShowCategories(!showCategories)}
             className="p-2 hover:bg-gray-100 rounded-sm transition-colors duration-200 "
-            title={showCategories ? "Kategorileri Gizle" : "Kategorileri Göster"}
+            title={
+              locale === "en"
+                ? showCategories
+                  ? "Hide categories"
+                  : "Show categories"
+                : showCategories
+                  ? "Kategorileri Gizle"
+                  : "Kategorileri Göster"
+            }
           >
             <ChevronUp 
               className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
@@ -289,8 +308,8 @@ export default function BlogsPage() {
         <div className="text-center py-12">
           <div className="text-xl text-gray-500">
             {selectedCategory === 'all' 
-              ? 'Henüz blog yazısı bulunmuyor.' 
-              : 'Bu kategoride blog yazısı bulunmuyor.'
+              ? (locale === "en" ? "No blog posts yet." : 'Henüz blog yazısı bulunmuyor.')
+              : (locale === "en" ? "No posts in this category." : 'Bu kategoride blog yazısı bulunmuyor.')
             }
           </div>
         </div>
@@ -301,7 +320,7 @@ export default function BlogsPage() {
             return (
               <Link
                 key={blog.id}
-                href={`/blog/${blog.id}`}
+                href={withLocalePrefix(`/blog/${blog.id}`, locale)}
                 className="group block bg-white rounded-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden border border-gray-200 h-fit"
               >
                 <div className="overflow-hidden">
@@ -320,7 +339,7 @@ export default function BlogsPage() {
                     </h2>
                     <div className="flex gap-2 items-center text-xs text-gray-500 mb-3">
                       <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
-                        {category ? category.name : 'Kategori Yok'}
+                        {category ? category.name : (locale === "en" ? "No category" : "Kategori Yok")}
                       </span>
                       <span>•</span>
                       <span>{formatDate(blog.createdAt)}</span>

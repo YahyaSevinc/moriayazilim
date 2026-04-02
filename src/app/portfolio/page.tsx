@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { ChevronUp, Search, X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname } from "@/app/utils/locale";
 
 interface Portfolio {
   id: string;
@@ -19,7 +21,7 @@ interface Category {
 }
 
 // Portfolio verileri - sayfa içi
-const portfolioData: Portfolio[] = [
+const portfolioDataTr: Portfolio[] = [
   {
     id: "1",
     image: "/logo.png",
@@ -63,7 +65,7 @@ const portfolioData: Portfolio[] = [
 ];
 
 // Portfolio kategorileri - sayfa içi
-const portfolioCategories: Category[] = [
+const portfolioCategoriesTr: Category[] = [
   {
     id: "1",
     name: "Demo Projeler"
@@ -75,8 +77,64 @@ const portfolioCategories: Category[] = [
 ];
 
 export default function PortfolioPage() {
-  const [categories] = useState<Category[]>(portfolioCategories);
-  const [portfolios] = useState<Portfolio[]>(portfolioData);
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+
+  const portfolioDataEn: Portfolio[] = [
+    {
+      id: "1",
+      image: "/logo.png",
+      name: "Yıltur Tourism",
+      description:
+        "We designed a corporate website for Yıltur Tourism. It was built as a mobile-friendly, fast, and user-friendly platform so visitors can easily access services and contact information.",
+      category: "Tourism",
+      href: "https://yilturturizm.com/",
+    },
+    {
+      id: "2",
+      image: "/mockup.jpg",
+      name: "Moria Integration",
+      description:
+        "Manage all your marketplace e-commerce operations (Trendyol, Hepsiburada, Amazon, n11 and more) from a single panel. Set up in minutes without coding, sync stock & price updates instantly, and streamline orders and invoicing.",
+      category: "Demo Projects",
+      href: "https://entegrasyon-moria-demo.vercel.app/",
+    },
+    {
+      id: "3",
+      image: "/mockup.jpg",
+      name: "Moria Integration Customer",
+      description:
+        "Corporate website design for companies in industrial automation, electrical contracting, and system integration — built with a modern and reliable structure.",
+      category: "Demo Projects",
+      href: "https://cmapps-customer.vercel.app/",
+    },
+    {
+      id: "4",
+      image: "/logo.png",
+      name: "Hair Salon Demo",
+      description:
+        "A modern, user-friendly hair salon website concept. The palette, typography and layout are designed to prioritize user experience. This demo showcases Moria’s industry-specific web design capability.",
+      category: "Demo Projects",
+      href: "https://kuafor-moria-demo.vercel.app/",
+    },
+    {
+      id: "5",
+      image: "/logo.png",
+      name: "Real Estate Demo",
+      description:
+        "A modern, user-friendly real estate website concept. The palette, typography and layout are designed to prioritize user experience. This demo showcases Moria’s industry-specific web design capability.",
+      category: "Demo Projects",
+      href: "https://gayrimenkul-moria-demo.vercel.app/",
+    },
+  ];
+
+  const portfolioCategoriesEn: Category[] = [
+    { id: "1", name: "Demo Projects" },
+    { id: "2", name: "Tourism" },
+  ];
+
+  const [categories] = useState<Category[]>(locale === "en" ? portfolioCategoriesEn : portfolioCategoriesTr);
+  const [portfolios] = useState<Portfolio[]>(locale === "en" ? portfolioDataEn : portfolioDataTr);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [categorySearch, setCategorySearch] = useState<string>('');
   const [showCategories, setShowCategories] = useState(true);
@@ -127,10 +185,12 @@ export default function PortfolioPage() {
           PORTFOLYO
         </span>
         <h1 className="mt-2 text-4xl sm:text-5xl font-bold text-gray-800">
-          Çalışmalarımız
+          {locale === "en" ? "Our work" : "Çalışmalarımız"}
         </h1>
         <p className="mt-4 text-gray-500 max-w-xl mx-auto text-base">
-          Tamamladığımız projeler ve müşterilerimiz için geliştirdiğimiz dijital çözümler!
+          {locale === "en"
+            ? "Projects we’ve delivered and digital solutions we built for our clients."
+            : "Tamamladığımız projeler ve müşterilerimiz için geliştirdiğimiz dijital çözümler!"}
         </p>
       </div>
 
@@ -143,12 +203,12 @@ export default function PortfolioPage() {
           <div className="p-6">
 
             <div className="flex flex-row justify-between">
-              <h3 className="text-xl font-semibold text-gray-800 p-2">Kategoriler</h3>
+              <h3 className="text-xl font-semibold text-gray-800 p-2">{locale === "en" ? "Categories" : "Kategoriler"}</h3>
               <div className="relative mb-6">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="text"
-                  placeholder="Kategori ara..."
+                  placeholder={locale === "en" ? "Search category..." : "Kategori ara..."}
                   value={categorySearch}
                   onChange={(e) => setCategorySearch(e.target.value)}
                   className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
@@ -199,7 +259,7 @@ export default function PortfolioPage() {
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    Tümü 
+                    {locale === "en" ? "All" : "Tümü"} 
                     <span className={`px-2 py-0.5 rounded-full text-xs ${
                       selectedCategory === 'all'
                         ? 'bg-white/20 text-white'
@@ -240,7 +300,9 @@ export default function PortfolioPage() {
                 {/* Arama sonucu bulunamadı */}
                 {categorySearch && filteredCategories.length === 0 && (
                   <div className="text-gray-500 text-sm py-2 flex-shrink-0">
-                    {categorySearch} için kategori bulunamadı
+                    {locale === "en"
+                      ? `No categories found for "${categorySearch}"`
+                      : `${categorySearch} için kategori bulunamadı`}
                   </div>
                 )}
               </div>
@@ -251,7 +313,15 @@ export default function PortfolioPage() {
           <button
             onClick={() => setShowCategories(!showCategories)}
             className="p-2 hover:bg-gray-100 rounded-sm transition-colors duration-200 "
-            title={showCategories ? "Kategorileri Gizle" : "Kategorileri Göster"}
+            title={
+              locale === "en"
+                ? showCategories
+                  ? "Hide categories"
+                  : "Show categories"
+                : showCategories
+                  ? "Kategorileri Gizle"
+                  : "Kategorileri Göster"
+            }
           >
             <ChevronUp 
               className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${
@@ -267,8 +337,8 @@ export default function PortfolioPage() {
         <div className="text-center py-12">
           <div className="text-xl text-gray-500">
             {selectedCategory === 'all' 
-              ? 'Henüz portfolio projesi bulunmuyor.' 
-              : 'Bu kategoride portfolio projesi bulunmuyor.'
+              ? (locale === "en" ? "No portfolio projects yet." : 'Henüz portfolio projesi bulunmuyor.')
+              : (locale === "en" ? "No projects in this category." : 'Bu kategoride portfolio projesi bulunmuyor.')
             }
           </div>
         </div>

@@ -8,6 +8,8 @@ import { usePathname } from "next/navigation";
 import SocialMediaIcons from './SocialMediaIcons';
 import { navigationItems, contactInfo } from '@/app/data/navigation';
 import { createPortal } from "react-dom";
+import LanguageToggle from "./LanguageToggle";
+import { getLocaleFromPathname, withLocalePrefix } from "@/app/utils/locale";
 
 
 export default function Header() {
@@ -18,7 +20,20 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
   const pathname = usePathname();
+  const isHome = pathname === "/" || pathname === "/en";
+  const locale = getLocaleFromPathname(pathname);
   const [hovered, setHovered] = useState<string | null>(null);
+
+  const nav =
+    locale === "en"
+      ? [
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+          { name: "Portfolio", path: "/portfolio" },
+          { name: "Packages", path: "/our-packages" },
+          { name: "Contact", path: "/contact" },
+        ]
+      : navigationItems;
 
   // Scroll lock for mobile menu
   useEffect(() => {
@@ -80,45 +95,54 @@ export default function Header() {
               console.log('Mailto clicked - opening email client');
               window.location.href = 'mailto:moriayazilim@gmail.com';
             }}
-            className={`flex items-center space-x-1 text-xs ${pathname=="/" ? "text-black/80" : "text-white" } hover:underline cursor-pointer`}
+            className={`flex items-center space-x-1 text-xs ${isHome ? "text-black/80" : "text-white" } hover:underline cursor-pointer`}
           >
             <FaEnvelope />
             <span>{contactInfo.email}</span>
           </a>
         </div>
 
-        <SocialMediaIcons className="text-xs" iconSize="text-sm" textColor={`${pathname=="/" ? "text-black" : "text-white" }`} exclude={['FaWhatsapp','MdEmail']} />
+        <div className="flex items-center gap-4">
+          <LanguageToggle
+            className="flex items-center"
+            textClassName={`text-xs font-semibold ${isHome ? "text-black" : "text-white" }`}
+            separatorClassName={`${isHome ? "text-black" : "text-white" } opacity-60`}
+          />
+          <SocialMediaIcons className="text-xs" iconSize="text-sm" textColor={`${isHome ? "text-black" : "text-white" }`} exclude={['FaWhatsapp','MdEmail']} />
+        </div>
       </div>
  
       <div className="flex justify-between items-center mt-6 px-20"> 
         <div className="text-4xl font-bold ">
-          <Link href="/">
-            <Image src={`${pathname=="/" ? "/logo.png" : "/logo_white.png" }`} alt="Logo" width={64} height={64} className="h-14 w-14 hover:scale-110 transition-all duration-300" />
+          <Link href={withLocalePrefix("/", locale)}>
+            <Image src={`${isHome ? "/logo.png" : "/logo_white.png" }`} alt="Logo" width={64} height={64} className="h-14 w-14 hover:scale-110 transition-all duration-300" />
           </Link>
         </div>
  
         <nav>
           <ul className="flex space-x-14 text-xl font-semibold">
-            {navigationItems.map(({ name, path }) => (
+            {nav.map(({ name, path }) => {
+              const href = withLocalePrefix(path, locale);
+              return (
               <li
-                key={path}
+                key={href}
                 className="relative group"
-                onMouseEnter={() => setHovered(path)}
+                onMouseEnter={() => setHovered(href)}
                 onMouseLeave={() => setHovered(null)}
               >
-                <Link href={path} className={`${pathname=="/" ? "text-black/70" : "text-white" } transition-all duration-300 lg:text-2xl md:text-lg`}>
+                <Link href={href} className={`${isHome ? "text-black/70" : "text-white" } transition-all duration-300 lg:text-2xl md:text-lg`}>
                   {name}
                 </Link>
                 <span
-                  className={`absolute left-0 bottom-0 w-full h-[2px] ${pathname=="/" ? "bg-black/50" : "bg-white" } transition-transform duration-500 scale-x-0 
-                  ${hovered === path ? "scale-x-100" : pathname === path && !hovered ? "scale-x-100" : ""}`}
+                  className={`absolute left-0 bottom-0 w-full h-[2px] ${isHome ? "bg-black/50" : "bg-white" } transition-transform duration-500 scale-x-0 
+                  ${hovered === href ? "scale-x-100" : pathname === href && !hovered ? "scale-x-100" : ""}`}
                 />
               </li>
-            ))}
+            )})}
           </ul>
         </nav>
         <div className="text-4xl font-bold ">
-          <Link href="/">
+          <Link href={withLocalePrefix("/", locale)}>
             <Image src="/logo_white.png" alt="Logo" width={64} height={64} className="h-14 opacity-0" />
           </Link>
         </div>
@@ -130,7 +154,7 @@ export default function Header() {
         <div className="flex justify-between items-center py-4 h-full">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/">
+            <Link href={withLocalePrefix("/", locale)}>
               <Image 
                 src="/logo.png" 
                 alt="Logo"
@@ -161,7 +185,7 @@ export default function Header() {
       {isMenuOpen && typeof window !== "undefined" && createPortal(
         <div className="fixed min-h-screen inset-0 z-[9999] bg-white flex flex-col h-full w-full mb-10 md:hidden">
           <div className="flex flex-row justify-between items-center py-4 px-4">
-            <Link href="/">
+            <Link href={withLocalePrefix("/", locale)}>
               <Image 
                 src="/logo.png" 
                 alt="Logo"
@@ -175,11 +199,18 @@ export default function Header() {
              
           </div>
           <hr className="my-2 border-gray-300" />
+          <div className="px-6 mt-4">
+            <LanguageToggle
+              className="flex items-center justify-start"
+              textClassName="text-sm font-semibold text-gray-800"
+              separatorClassName="text-gray-800 opacity-50"
+            />
+          </div>
           <nav className="flex-1 flex flex-col justify-start px-6 gap-6 mt-4">
-            {navigationItems.map(({ name, path }) => (
+            {nav.map(({ name, path }) => (
               <Link 
                 key={path}
-                href={path} 
+                href={withLocalePrefix(path, locale)} 
                 className="text-2xl font-normal" 
                 onClick={() => setIsMenuOpen(false)}
               >

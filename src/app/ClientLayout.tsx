@@ -19,6 +19,7 @@ export default function ClientLayout({
 }) {
   const pathname = usePathname();
   const [showWhiteHeader, setShowWhiteHeader] = useState(false);
+  const isHome = pathname === "/" || pathname === "/en";
 
   // Scroll dinleyici: 80px'den fazla scroll olursa sticky header göster (sadece md ve üstü için)
   React.useEffect(() => {
@@ -56,7 +57,7 @@ export default function ClientLayout({
   return (
     <>
       {/* Sticky beyaz header - sadece anasayfa için */}
-      {showWhiteHeader && (
+      {isHome && showWhiteHeader && (
         <div
           className="fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-500 ease-out transform animate-fade-in-custom"
         >
@@ -68,7 +69,7 @@ export default function ClientLayout({
         <div className="absolute w-full z-40">
           <Header />
         </div>
-        {pathname === '/' ? <Header_Long /> : <Header_Short />}
+        {isHome ? <Header_Long /> : <Header_Short />}
       </div>
       <div>
         {children}

@@ -1,8 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname } from "@/app/utils/locale";
 
 export default function PricingHeader() {
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -18,7 +23,7 @@ export default function PricingHeader() {
         viewport={{ once: true }}
         className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
       >
-        Paketlerimiz
+        {locale === "en" ? "Our packages" : "Paketlerimiz"}
       </motion.h1>
       <motion.p 
         initial={{ opacity: 0, y: 20 }}
@@ -27,7 +32,9 @@ export default function PricingHeader() {
         viewport={{ once: true }}
         className="text-xl text-gray-600 max-w-3xl mx-auto"
       >
-        İhtiyaçlarınıza uygun paketimizi seçin. Tüm paketlerimiz profesyonel web sitesi çözümleri sunar.
+        {locale === "en"
+          ? "Choose the package that fits your needs. All of our plans provide professional website solutions."
+          : "İhtiyaçlarınıza uygun paketimizi seçin. Tüm paketlerimiz profesyonel web sitesi çözümleri sunar."}
       </motion.p>
     </motion.div>
   );

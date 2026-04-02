@@ -5,8 +5,12 @@ import { useState } from 'react';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { FiArrowRight } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname, withLocalePrefix } from "@/app/utils/locale";
 
 export default function Portfolio() {
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
   const [currentPage, setCurrentPage] = useState(1);
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
@@ -42,14 +46,43 @@ export default function Portfolio() {
     }
   };
 
-  const pageContent = [
-    {
-      title: "Hakkımızda",
-      description: "Hayal gücünü kodla buluşturan genç ve dinamik bir ekibiz. Modern teknolojilerle yazılım çözümleri geliştiriyor, her projeye tutkuyla yaklaşıyoruz. Moria Yazılım, fikirlerin gerçeğe dönüştüğü yerdir.",
-      buttonText: "Bizi Tanıyın",
-      image: "/our_work.jpg",
-      href: '/about'
-    },
+  const pageContent =
+    locale === "en"
+      ? [
+          {
+            title: "About",
+            description:
+              "We’re a young, dynamic team turning imagination into code. We build modern software solutions and approach every project with passion. Moria is where ideas become reality.",
+            buttonText: "Meet us",
+            image: "/our_work.jpg",
+            href: withLocalePrefix("/about", locale),
+          },
+          {
+            title: "Portfolio",
+            description:
+              "Our projects are carefully planned with user experience and aesthetics in mind. From web to mobile, we deliver innovative and reliable solutions.",
+            buttonText: "See our work",
+            image: "/calismalarimiz.jpg",
+            href: withLocalePrefix("/portfolio", locale),
+          },
+          {
+            title: "Contact",
+            description:
+              "Have an idea? Let’s talk. We’ll define the best digital solution for you together. The Moria team is just a message away.",
+            buttonText: "Get in touch",
+            image: "/contact2.jpg",
+            href: withLocalePrefix("/contact", locale),
+          },
+        ]
+      : [
+          {
+            title: "Hakkımızda",
+            description:
+              "Hayal gücünü kodla buluşturan genç ve dinamik bir ekibiz. Modern teknolojilerle yazılım çözümleri geliştiriyor, her projeye tutkuyla yaklaşıyoruz. Moria Yazılım, fikirlerin gerçeğe dönüştüğü yerdir.",
+            buttonText: "Bizi Tanıyın",
+            image: "/our_work.jpg",
+            href: "/about",
+          },
     // {
     //   title: "Bloglarımız",
     //   description: "Web tasarım, SEO, yazılım geliştirme ve kullanıcı deneyimi üzerine dopdolu içerikler şimdi blog sayfamızda. Takipte kal, dijital dünyayı kaçırma!",
@@ -57,21 +90,23 @@ export default function Portfolio() {
     //   image: "/blogs.jpg",
     //   href:'/blog'
     // },
-    {
-      title: "Portfolyomuz",
-      description: "Her biri özenle planlanmış projelerimiz, kullanıcı deneyimi ve estetiği ön planda tutarak geliştirildi. Web'den mobil uygulamalara kadar geniş bir yelpazede, yenilikçi ve güvenilir çözümler sunuyoruz.",
-      buttonText: "Çalışmalarımız",
-      image: "/calismalarimiz.jpg",
-      href: '/portfolio'
-    },
-    {
-      title: "İletişim",
-      description: "Fikriniz mi var? Haydi konuşalım! Size en uygun dijital çözümleri birlikte belirleyelim. Moria Yazılım ekibi, her zaman bir mesaj uzağınızda.",
-      buttonText: "Bize Ulaşın",
-      image: "/contact2.jpg",
-      href: '/contact'
-    }
-  ];
+          {
+            title: "Portfolyomuz",
+            description:
+              "Her biri özenle planlanmış projelerimiz, kullanıcı deneyimi ve estetiği ön planda tutarak geliştirildi. Web'den mobil uygulamalara kadar geniş bir yelpazede, yenilikçi ve güvenilir çözümler sunuyoruz.",
+            buttonText: "Çalışmalarımız",
+            image: "/calismalarimiz.jpg",
+            href: "/portfolio",
+          },
+          {
+            title: "İletişim",
+            description:
+              "Fikriniz mi var? Haydi konuşalım! Size en uygun dijital çözümleri birlikte belirleyelim. Moria Yazılım ekibi, her zaman bir mesaj uzağınızda.",
+            buttonText: "Bize Ulaşın",
+            image: "/contact2.jpg",
+            href: "/contact",
+          },
+        ];
 
   // Mobil animasyon class'ı
   const getMobileSlideClass = (index: number) => {
@@ -154,7 +189,7 @@ export default function Portfolio() {
     className={`${currentPage > 1 ? 'bg-gray-900' : 'bg-gray-500'} text-white p-6 rounded-full aspect-square cursor-pointer`}
     onClick={() => handlePageChange('prev')}
     disabled={currentPage === 1 || animating}
-    aria-label="Önceki Slayt" // EKLENEN KISIM
+    aria-label={locale === "en" ? "Previous slide" : "Önceki Slayt"}
   >
     <FaArrowLeft size={30}/>
   </button>
@@ -162,7 +197,7 @@ export default function Portfolio() {
     className={`${currentPage < totalPages ? 'bg-gray-900' : 'bg-gray-500'} text-white p-6 rounded-full aspect-square cursor-pointer`}
     onClick={() => handlePageChange('next')}
     disabled={currentPage === totalPages || animating}
-    aria-label="Sonraki Slayt" // EKLENEN KISIM
+    aria-label={locale === "en" ? "Next slide" : "Sonraki Slayt"}
   >
     <FaArrowRight size={30}/>
   </button>

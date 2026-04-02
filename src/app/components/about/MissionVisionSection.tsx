@@ -2,9 +2,32 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { usePathname } from "next/navigation";
+import { getLocaleFromPathname } from "@/app/utils/locale";
 
 export default function MissionVisionSection() {
   const [activeTab, setActiveTab] = useState<'mission' | 'vision'>('mission');
+  const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+
+  const t =
+    locale === "en"
+      ? {
+          missionTitle: "Our mission",
+          missionBody:
+            "We bring technology and innovation together to deliver the highest quality service. In every project, we prioritize sustainability and customer satisfaction.",
+          visionTitle: "Our vision",
+          visionBody:
+            "We aim to be a leading, innovative, and reliable brand — inspiring digital transformation. By combining technology with human-centered solutions, our vision is sustainable success.",
+        }
+      : {
+          missionTitle: "Misyonumuz",
+          missionBody:
+            "Müşterilerimize en yüksek kalitede hizmet sunarak, teknoloji ve inovasyonu bir araya getiriyoruz. Her projemizde sürdürülebilirlik ve müşteri memnuniyetini ön planda tutuyoruz.",
+          visionTitle: "Vizyonumuz",
+          visionBody:
+            "Sektörde öncü, yenilikçi ve güvenilir bir marka olarak, dijital dönüşümde ilham kaynağı olmayı hedefliyoruz. Teknolojiyi insan odaklı çözümlerle buluşturarak, sürdürülebilir başarıya ulaşmak vizyonumuzdur.",
+        };
 
   return (
     <section className="py-20 px-4 md:px-8 max-w-4xl mx-auto">
@@ -31,8 +54,8 @@ export default function MissionVisionSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <h2 className="text-2xl md:text-3xl mb-4">Misyonumuz</h2>
-            <p className="text-base md:text-lg leading-relaxed">Müşterilerimize en yüksek kalitede hizmet sunarak, teknoloji ve inovasyonu bir araya getiriyoruz. Her projemizde sürdürülebilirlik ve müşteri memnuniyetini ön planda tutuyoruz.</p>
+            <h2 className="text-2xl md:text-3xl mb-4">{t.missionTitle}</h2>
+            <p className="text-base md:text-lg leading-relaxed">{t.missionBody}</p>
             {activeTab === 'mission' && (
               <motion.div 
                 initial={{ width: 0 }}
@@ -60,8 +83,8 @@ export default function MissionVisionSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <h2 className="text-2xl md:text-3xl mb-4">Vizyonumuz</h2>
-            <p className="text-base md:text-lg leading-relaxed">Sektörde öncü, yenilikçi ve güvenilir bir marka olarak, dijital dönüşümde ilham kaynağı olmayı hedefliyoruz. Teknolojiyi insan odaklı çözümlerle buluşturarak, sürdürülebilir başarıya ulaşmak vizyonumuzdur.</p>
+            <h2 className="text-2xl md:text-3xl mb-4">{t.visionTitle}</h2>
+            <p className="text-base md:text-lg leading-relaxed">{t.visionBody}</p>
             {activeTab === 'vision' && (
               <motion.div 
                 initial={{ width: 0 }}
