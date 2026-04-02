@@ -57,9 +57,9 @@ type StatCardProps = {
 };
 
 function StatCard({ value, label, index, statsInView }: StatCardProps) {
-  const match = value.match(/(\d+)(\+?)/);
+  const match = value.trim().match(/^(\d+)\s*(\+|%)?$/);
   const number = match ? parseInt(match[1], 10) : 0;
-  const suffix = match ? match[2] : "";
+  const suffix = match?.[2] ?? "";
   const animated = useCountUp(number, 600 + index * 100, statsInView);
 
   return (
@@ -103,7 +103,7 @@ const DreamSection: React.FC = () => {
           stats: [
             { value: "5+", label: "Years of experience" },
             { value: "20+", label: "Completed projects" },
-            { value: "10+", label: "Happy clients" },
+            { value: "100%", label: "Customer Satisfaction" },
             { value: "5", label: "Team members" },
           ],
         }
@@ -125,7 +125,7 @@ const DreamSection: React.FC = () => {
           stats: [
             { value: "5+", label: "Yıllık Tecrübe" },
             { value: "20+", label: "Tamamlanan Proje" },
-            { value: "10+", label: "Mutlu Müşteri" },
+            { value: "100%", label: "Müşteri Memnuniyeti" },
             { value: "5", label: "Kişilik Ekip" },
           ],
         };
@@ -145,7 +145,7 @@ const DreamSection: React.FC = () => {
           className="flex-1 bg-white shadow-lg border border-gray-200 rounded-2xl p-8 md:min-h-[70vh] flex flex-col h-full"
         >
           <div>
-            <span className="text-orange-500 text-xl mb-3 block">{DREAM_DATA.title.subtitle}</span>
+            <span className="text-blue-500 text-xl mb-3 block">{DREAM_DATA.title.subtitle}</span>
             {/* Erişilebilirlik için Ana Başlık etiketi */}
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight whitespace-pre-line">
               {DREAM_DATA.title.mainTitle}
