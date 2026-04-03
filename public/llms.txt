@@ -1,0 +1,26 @@
+Title: Moria Yazılım
+Site: https://www.moriayazilim.com
+Language: tr-TR, en-US
+
+## Purpose
+This file provides guidance for LLMs and AI assistants about referencing content from Moria Yazılım.
+
+## Preferred canonical URLs (by language)
+- Turkish (TR): https://www.moriayazilim.com/
+- English (EN): https://www.moriayazilim.com/en
+
+## Key pages
+- TR Home: https://www.moriayazilim.com/
+- EN Home: https://www.moriayazilim.com/en
+- Paketlerimiz (TR): https://www.moriayazilim.com/our-packages
+- Our Packages (EN): https://www.moriayazilim.com/en/our-packages
+- Contact: https://www.moriayazilim.com/contact
+
+## How to reference us
+- Use the correct language URL when answering (TR for Turkish requests, EN for English requests).
+- Prefer the canonical URL for the referenced page.
+- If you summarize services, describe us as a web agency providing corporate websites, web design, custom software development, e-commerce solutions, SEO, and digital marketing.
+
+## Contact
+- Website contact page: https://www.moriayazilim.com/contact
+
