@@ -6,6 +6,20 @@ module.exports = {
   changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 5000,
+  alternateRefs: [
+    {
+      href: 'https://moriayazilim.com',
+      hreflang: 'tr-TR',
+    },
+    {
+      href: 'https://moriayazilim.com/en',
+      hreflang: 'en-US',
+    },
+    {
+      href: 'https://moriayazilim.com',
+      hreflang: 'x-default',
+    },
+  ],
 
   additionalPaths: async () => {
     try {
@@ -13,12 +27,20 @@ module.exports = {
       const posts = res.data;
       console.log('Blog post sayısı:', posts.length);
 
-      return posts.map(post => ({
-        loc: `/blog/${post.id}`,
-        changefreq: 'weekly',
-        priority: 0.8,
-        lastmod: new Date(post.updatedAt).toISOString(),
-      }));
+      return posts.flatMap((post) => [
+        {
+          loc: `/blog/${post.id}`,
+          changefreq: 'weekly',
+          priority: 0.8,
+          lastmod: new Date(post.updatedAt).toISOString(),
+        },
+        {
+          loc: `/en/blog/${post.id}`,
+          changefreq: 'weekly',
+          priority: 0.8,
+          lastmod: new Date(post.updatedAt).toISOString(),
+        },
+      ]);
     } catch (error) {
       console.error('Sitemap için blog verisi alınamadı:', error);
       return [];

@@ -94,11 +94,11 @@ const DreamSection: React.FC = () => {
             mobile:
               "Our journey started with a dream and passion. As a small team, we built our first projects with huge excitement — and we still work with the same drive today.",
             desktop:
-              "Moria Software was born from the passion and dreams of a few young developers. For us, writing code was never “just work” — it was a way of life. In a small room, with old computers, we built our first projects. Our resources were limited, but our curiosity and desire to learn were endless. We coded at night and researched by day; we learned a lot, made mistakes, and never gave up. Every attempt made us better. Over time, we took on small jobs and our first clients trusted us. With that trust, we grew our team. Our goal has always been to deliver quality and speed. In every line of code, we turn an idea into reality. We still work with the excitement of day one. We took the name “Moria” from our imagination — we’re not just building software, we’re building a vision. We learned that with patience and determination, anything is possible. Today we’re stronger: a team, a family. And we know our best projects are still ahead.",
+              "Moria Yazılım was born from the passion and dreams of a few young developers. For us, writing code was never “just work” — it was a way of life. In a small room, with old computers, we built our first projects. Our resources were limited, but our curiosity and desire to learn were endless. We coded at night and researched by day; we learned a lot, made mistakes, and never gave up. Every attempt made us better. Over time, we took on small jobs and our first clients trusted us. With that trust, we grew our team. Our goal has always been to deliver quality and speed. In every line of code, we turn an idea into reality. We still work with the excitement of day one. We took the name “Moria” from our imagination — we’re not just building software, we’re building a vision. We learned that with patience and determination, anything is possible. Today we’re stronger: a team, a family. And we know our best projects are still ahead.",
           },
           image: {
             src: "/about_us.jpg",
-            alt: "The founding story of Moria Software",
+            alt: "The founding story of Moria Yazılım",
           },
           stats: [
             { value: "5+", label: "Years of experience" },
